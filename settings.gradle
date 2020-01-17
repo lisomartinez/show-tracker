@@ -1,0 +1,5 @@
+rootProject.name = 'show-tracker'
+
+include 'shared'
+include 'tracker'
+

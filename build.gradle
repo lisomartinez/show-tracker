@@ -1,0 +1,74 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.3.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+}
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'org.springframework.boot'
+
+	group = 'com.github.lmartinez84'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '13'
+	targetCompatibility = '13'
+
+
+	configurations {
+		developmentOnly
+		runtimeClasspath {
+			extendsFrom developmentOnly
+		}
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
+
+	repositories {
+		maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+		mavenCentral()
+		maven { url 'https://repo.spring.io/snapshot' }
+		maven { url 'https://repo.spring.io/milestone' }
+	}
+
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter'
+		compileOnly 'org.projectlombok:lombok'
+		developmentOnly 'org.springframework.boot:spring-boot-devtools'
+		annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+		annotationProcessor 'org.projectlombok:lombok'
+		testImplementation('org.springframework.boot:spring-boot-starter-test') {
+//			exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+		}
+		testImplementation "org.assertj:assertj-core:3.11.1"
+//		implementation "io.cucumber.cucumber-spring:5.0.0-RC4"
+// https://mvnrepository.com/artifact/io.cucumber/cucumber-spring
+		compile group: 'io.cucumber', name: 'cucumber-spring', version: '5.0.0-RC4'
+// https://mvnrepository.com/artifact/io.cucumber/cucumber-junit
+		testCompile group: 'io.cucumber', name: 'cucumber-junit', version: '5.0.0-RC4'
+// https://mvnrepository.com/artifact/io.cucumber/cucumber-java
+		compile group: 'io.cucumber', name: 'cucumber-java8', version: '5.0.0-RC4'
+		implementation 'io.projectreactor:reactor-core'
+		implementation 'org.reflections:reflections:0.9.11'
+		if (project.name != "shared") {
+			implementation project(":shared")
+			testImplementation project(":shared").sourceSets.test.output
+		}
+
+	}
+
+	test {
+		useJUnitPlatform()
+		testLogging {
+			events "passed", "skipped", "failed"
+		}
+	}
+
+	bootJar {
+		enabled = false
+	}
+
+	jar {
+		enabled = true
+	}
+}
+
