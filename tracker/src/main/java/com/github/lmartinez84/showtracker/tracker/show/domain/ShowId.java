@@ -7,7 +7,7 @@ public final class ShowId extends Identifier {
         super(value);
     }
 
-    public static ShowId from(String value) {
+    public static ShowId create(String value) {
         return new ShowId(value);
     }
 }

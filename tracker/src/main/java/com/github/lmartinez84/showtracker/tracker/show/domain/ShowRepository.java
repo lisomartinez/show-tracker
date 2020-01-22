@@ -1,5 +1,7 @@
 package com.github.lmartinez84.showtracker.tracker.show.domain;
 
+import reactor.core.publisher.Mono;
+
 public interface ShowRepository {
-    void save(Show show);
+    Mono<Show> load(ShowId id);
 }

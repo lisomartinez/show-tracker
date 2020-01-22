@@ -16,7 +16,15 @@ public abstract class Identifier implements Serializable {
     }
 
     public static String newEventId() {
+        return createRandomUUID();
+    }
+
+    private static String createRandomUUID() {
         return UUID.randomUUID().toString();
+    }
+
+    public static String newCommandId() {
+        return createRandomUUID();
     }
 
 

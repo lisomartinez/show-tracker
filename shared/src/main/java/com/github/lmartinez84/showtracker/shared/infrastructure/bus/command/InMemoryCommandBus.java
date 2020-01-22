@@ -7,17 +7,18 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.ReplayProcessor;
 
 @Service
-@DependsOn("subscribers")
+@DependsOn("commandBusSubscribers")
 public class InMemoryCommandBus implements CommandBus {
-    private final Subscribers subscribers;
+    private final CommandBusSubscribers subscribers;
 
-    public InMemoryCommandBus(Subscribers subscribers) {
+    public InMemoryCommandBus(CommandBusSubscribers subscribers) {
         this.subscribers = subscribers;
     }
 
+
     @Override
     public void dispatch(Command command) {
-        ReplayProcessor<Command> publisher = subscribers.searchPublisher(command.getClass());
+        ReplayProcessor<Command> publisher = subscribers.getPublisherFor(command.getClass());
         publisher.onNext(command);
     }
 }

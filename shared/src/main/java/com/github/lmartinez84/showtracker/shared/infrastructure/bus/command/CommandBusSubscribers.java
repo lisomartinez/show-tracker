@@ -4,7 +4,6 @@ import com.github.lmartinez84.showtracker.shared.domain.bus.command.Command;
 import com.github.lmartinez84.showtracker.shared.domain.bus.command.CommandHandler;
 import org.reflections.Reflections;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Service;
 import reactor.core.publisher.ReplayProcessor;
 
 import java.lang.reflect.ParameterizedType;
@@ -15,13 +14,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("ALL")
-@Service
-public class Subscribers {
+public class CommandBusSubscribers {
     private ApplicationContext context;
     private Map<Class<? extends Command>, Class<? extends CommandHandler>> indexedCommandHandlers;
     private Map<Class<? extends Command>, ReplayProcessor<Command>> publisher;
 
-    public Subscribers(ApplicationContext context) {
+    public CommandBusSubscribers(ApplicationContext context) {
         this.context = context;
         Reflections reflections = new Reflections("com.github.lmartinez84.showtracker");
         Set<Class<? extends CommandHandler>> classes = reflections.getSubTypesOf(CommandHandler.class);
@@ -39,7 +37,7 @@ public class Subscribers {
         }
     }
 
-    public ReplayProcessor<Command> searchPublisher(Class<? extends Command> commandClass) {
+    public ReplayProcessor<Command> getPublisherFor(Class<? extends Command> commandClass) {
         return publisher.get(commandClass);
     }
 

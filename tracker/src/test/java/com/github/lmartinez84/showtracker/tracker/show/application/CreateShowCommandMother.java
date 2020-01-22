@@ -6,6 +6,7 @@ public class CreateShowCommandMother {
 
     public static CreateShowCommand random() {
         ShowId id = ShowIdMother.random();
-        return new CreateShowCommand(id.value());
+        return new CreateShowCommand(id.value(), "title", 2010);
     }
+
 }

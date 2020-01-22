@@ -1,5 +1,6 @@
 package com.github.lmartinez84.showtracker.shared.infrastructure;
 
+import com.github.lmartinez84.showtracker.shared.domain.AggregateRoot;
 import com.github.lmartinez84.showtracker.shared.domain.DomainEvent;
 import com.github.lmartinez84.showtracker.shared.domain.bus.event.EventBus;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +17,7 @@ public abstract class UnitTestCase {
         eventBus = mock(EventBus.class);
     }
 
-    public void shouldHavePublished(List<DomainEvent> domainEvents) {
+    public void shouldHavePublished(List<DomainEvent<? extends AggregateRoot>> domainEvents) {
         verify(eventBus, times(1)).publish(domainEvents);
     }
 }

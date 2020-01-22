@@ -24,10 +24,10 @@ subprojects {
 	}
 
 	repositories {
-		maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-		mavenCentral()
-		maven { url 'https://repo.spring.io/snapshot' }
 		maven { url 'https://repo.spring.io/milestone' }
+		maven { url 'https://repo.spring.io/snapshot' }
+		mavenCentral()
+		maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 	}
 
 	dependencies {
@@ -48,6 +48,8 @@ subprojects {
 // https://mvnrepository.com/artifact/io.cucumber/cucumber-java
 		compile group: 'io.cucumber', name: 'cucumber-java8', version: '5.0.0-RC4'
 		implementation 'io.projectreactor:reactor-core'
+		testImplementation 'io.projectreactor:reactor-test'
+//		testImplementation 'io.projectreactor:reactor-tools'
 		implementation 'org.reflections:reflections:0.9.11'
 		if (project.name != "shared") {
 			implementation project(":shared")
