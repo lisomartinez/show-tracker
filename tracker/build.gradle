@@ -9,20 +9,27 @@ dependencies {
     implementation project(':shared')
     testImplementation project(":shared")
     testCompile project(":shared")
-    implementation 'org.springframework.boot.experimental:spring-boot-starter-data-r2dbc'
+//    implementation 'org.springframework.boot.experimental:spring-boot-starter-data-r2dbc'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'dev.miku:r2dbc-mysql'
-    runtimeOnly 'io.r2dbc:r2dbc-h2'
-    runtimeOnly 'mysql:mysql-connector-java'
-    testImplementation 'org.springframework.boot.experimental:spring-boot-test-autoconfigure-r2dbc'
+//    runtimeOnly 'com.h2database:h2'
+//    runtimeOnly 'dev.miku:r2dbc-mysql'
+//    runtimeOnly 'io.r2dbc:r2dbc-h2'
+//    runtimeOnly 'mysql:mysql-connector-java'
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+//    testImplementation 'org.springframework.boot.experimental:spring-boot-test-autoconfigure-r2dbc'
 //    implementation 'io.projectreactor:reactor-core'
 //    testImplementation 'io.projectreactor:reactor-test'
 }
-
+//ext {
+//    set('springCloudVersion', "Hoxton.SR1")
+//    set('spring.cloud.strea.version','3.0.1.RELEASE')
+//}
+//
 dependencyManagement {
     imports {
-        mavenBom 'org.springframework.boot.experimental:spring-boot-bom-r2dbc:0.1.0.BUILD-SNAPSHOT'
+//        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+//        mavenBom 'org.springframework.boot.experimental:spring-boot-bom-r2dbc:0.1.0.BUILD-SNAPSHOT'
     }
 }
+

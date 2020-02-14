@@ -2,11 +2,13 @@ package com.github.lmartinez84.showtracker.shared.infrastructure.store;
 
 import com.github.lmartinez84.showtracker.shared.domain.AggregateRoot;
 import org.reflections.Reflections;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+@Service
 public final class AggregateRootInformation {
     Map<String, Class<? extends AggregateRoot>> registry;
 

@@ -1,23 +1,22 @@
 package com.github.lmartinez84.showtracker.shared.infrastructure;
 
-import com.github.lmartinez84.showtracker.shared.domain.AggregateRoot;
 import com.github.lmartinez84.showtracker.shared.domain.DomainEvent;
 import com.github.lmartinez84.showtracker.shared.domain.bus.event.EventBus;
 import org.junit.jupiter.api.BeforeEach;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
 
 import static org.mockito.Mockito.*;
 
 public abstract class UnitTestCase {
+
     protected EventBus eventBus;
 
     @BeforeEach
-    void setUp() {
+    public void setUpUnitTest() {
         eventBus = mock(EventBus.class);
     }
 
-    public void shouldHavePublished(List<DomainEvent<? extends AggregateRoot>> domainEvents) {
+    public void shouldHavePublished(Flux<DomainEvent> domainEvents) {
         verify(eventBus, times(1)).publish(domainEvents);
     }
 }

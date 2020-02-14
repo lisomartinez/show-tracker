@@ -1,6 +1,8 @@
 package com.github.lmartinez84.showtracker.tracker.show.application;
 
-import com.github.lmartinez84.showtracker.tracker.show.domain.ShowId;
+import com.github.lmartinez84.showtracker.tracker.show.application.show.create.CreateShowCommand;
+import com.github.lmartinez84.showtracker.tracker.show.domain.ShowIdMother;
+import com.github.lmartinez84.showtracker.tracker.show.domain.show.ShowId;
 
 public class CreateShowCommandMother {
 

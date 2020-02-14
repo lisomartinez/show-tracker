@@ -2,12 +2,14 @@ package com.github.lmartinez84.showtracker.tracker.show.infrastructure;
 
 import com.github.lmartinez84.showtracker.shared.domain.bus.command.Command;
 import com.github.lmartinez84.showtracker.shared.infrastructure.bus.command.CommandBusSubscribers;
-import com.github.lmartinez84.showtracker.tracker.show.application.CreateShowCommand;
 import com.github.lmartinez84.showtracker.tracker.show.application.CreateShowCommandMother;
+import com.github.lmartinez84.showtracker.tracker.show.application.show.create.CreateShowCommand;
+import com.github.lmartinez84.showtracker.tracker.show.application.show.create.CreateShowCommandHandler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 import reactor.core.publisher.ReplayProcessor;
@@ -20,6 +22,9 @@ class CommandBusSubscribersTest {
     private ApplicationContext context;
     @Autowired
     private CommandBusSubscribers subscribers;
+
+    @MockBean
+    private CreateShowCommandHandler handler;
 
     @Test
     @DisplayName("")

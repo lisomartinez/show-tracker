@@ -27,6 +27,10 @@ public abstract class Identifier implements Serializable {
         return createRandomUUID();
     }
 
+    public static String newAggregateId() {
+        return createRandomUUID();
+    }
+
 
     protected void ensureIsValid(String uid) {
         try {
@@ -39,6 +43,11 @@ public abstract class Identifier implements Serializable {
     }
 
     public String value() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
         return value;
     }
 
@@ -58,6 +67,5 @@ public abstract class Identifier implements Serializable {
     public int hashCode() {
         return value.hashCode();
     }
-
 
 }

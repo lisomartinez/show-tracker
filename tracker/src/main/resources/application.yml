@@ -1,10 +1,6 @@
 spring:
   profiles:
-}    active: "test"
-       main:
-         banner-mode: "off"
-
+    active: test
 ---
-
 spring:
-  profiles: dev
+  profiles: test

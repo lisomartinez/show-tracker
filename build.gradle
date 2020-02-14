@@ -9,8 +9,8 @@ subprojects {
 
 	group = 'com.github.lmartinez84'
 	version = '0.0.1-SNAPSHOT'
-	sourceCompatibility = '13'
-	targetCompatibility = '13'
+	sourceCompatibility = '11'
+	targetCompatibility = '11'
 
 
 	configurations {
@@ -30,6 +30,16 @@ subprojects {
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 	}
 
+	ext {
+		set('springCloudVersion', "Hoxton.SR1")
+		set('spring.cloud.strea.version','3.0.1.RELEASE')
+	}
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		}
+	}
+
 	dependencies {
 		implementation 'org.springframework.boot:spring-boot-starter'
 		compileOnly 'org.projectlombok:lombok'
@@ -37,25 +47,30 @@ subprojects {
 		annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 		annotationProcessor 'org.projectlombok:lombok'
 		testImplementation('org.springframework.boot:spring-boot-starter-test') {
-//			exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+			exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 		}
 		testImplementation "org.assertj:assertj-core:3.11.1"
 //		implementation "io.cucumber.cucumber-spring:5.0.0-RC4"
-// https://mvnrepository.com/artifact/io.cucumber/cucumber-spring
 		compile group: 'io.cucumber', name: 'cucumber-spring', version: '5.0.0-RC4'
-// https://mvnrepository.com/artifact/io.cucumber/cucumber-junit
 		testCompile group: 'io.cucumber', name: 'cucumber-junit', version: '5.0.0-RC4'
-// https://mvnrepository.com/artifact/io.cucumber/cucumber-java
 		compile group: 'io.cucumber', name: 'cucumber-java8', version: '5.0.0-RC4'
 		implementation 'io.projectreactor:reactor-core'
 		testImplementation 'io.projectreactor:reactor-test'
-//		testImplementation 'io.projectreactor:reactor-tools'
+		implementation 'org.springframework.boot:spring-boot-configuration-processor'
 		implementation 'org.reflections:reflections:0.9.11'
+//		implementation 'org.springframework.boot:spring-boot-starter-amqp'
+//		implementation 'org.springframework.cloud:spring-cloud-stream'
+//		implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
+//		testImplementation 'org.springframework.amqp:spring-rabbit-test'
+//		testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support'
+//		testCompile 'org.springframework.cloud:spring-cloud-stream:3.0.1.RELEASE:test-binder'
 		if (project.name != "shared") {
 			implementation project(":shared")
 			testImplementation project(":shared").sourceSets.test.output
 		}
-
+		implementation("com.github.msemys:esjc:2.1.0")
+		implementation 'org.springframework.boot:spring-boot-starter-integration'
+		testImplementation 'org.springframework.integration:spring-integration-test'
 	}
 
 	test {

@@ -4,6 +4,7 @@ import com.github.lmartinez84.showtracker.shared.domain.bus.command.Command;
 import com.github.lmartinez84.showtracker.shared.domain.bus.command.CommandHandler;
 import org.reflections.Reflections;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.ReplayProcessor;
 
 import java.lang.reflect.ParameterizedType;
@@ -14,6 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("ALL")
+@Service
 public class CommandBusSubscribers {
     private ApplicationContext context;
     private Map<Class<? extends Command>, Class<? extends CommandHandler>> indexedCommandHandlers;

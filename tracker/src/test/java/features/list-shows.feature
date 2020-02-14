@@ -1,7 +1,7 @@
 Feature: List Shows
   As a user
   I want to know which shows I am currently following
-  So I know what I am interested in
+  So I know what I'm interested in
 
   Background:
     Given I am logged

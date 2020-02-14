@@ -1,53 +1,49 @@
 package com.github.lmartinez84.showtracker.tracker.show.application;
 
-import com.github.lmartinez84.showtracker.shared.domain.AggregateRoot;
 import com.github.lmartinez84.showtracker.shared.domain.DomainEvent;
-import com.github.lmartinez84.showtracker.tracker.show.domain.ShowId;
-import com.github.lmartinez84.showtracker.tracker.show.domain.ShowTitle;
-import com.github.lmartinez84.showtracker.tracker.show.domain.ShowYear;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
+import com.github.lmartinez84.showtracker.tracker.show.ShowModuleUnitTestCase;
+import com.github.lmartinez84.showtracker.tracker.show.application.show.create.CreateShowCommand;
+import com.github.lmartinez84.showtracker.tracker.show.application.show.create.CreateShowCommandHandler;
+import com.github.lmartinez84.showtracker.tracker.show.application.show.create.ShowCreator;
+import com.github.lmartinez84.showtracker.tracker.show.domain.ShowCreatedEventMother;
+import com.github.lmartinez84.showtracker.tracker.show.domain.ShowIdMother;
+import com.github.lmartinez84.showtracker.tracker.show.domain.ShowTitleMother;
+import com.github.lmartinez84.showtracker.tracker.show.domain.ShowYearMother;
+import com.github.lmartinez84.showtracker.tracker.show.domain.show.Show;
+import com.github.lmartinez84.showtracker.tracker.show.domain.show.ShowId;
+import com.github.lmartinez84.showtracker.tracker.show.domain.show.ShowTitle;
+import com.github.lmartinez84.showtracker.tracker.show.domain.show.ShowYear;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
 
 import static org.mockito.Mockito.*;
 
 class CreateShowCommandHandlerTest extends ShowModuleUnitTestCase {
     private CreateShowCommandHandler handler;
 
-    @BeforeEach
-    void setUp() {
-
-    }
-
     @Test
     void it_should_create_a_show_and_publish_ShowCreatedEvent() {
-        //given
         CreateShowCommand cmd = CreateShowCommandMother.random();
-        handler = new CreateShowCommandHandler(new ShowCreator(this.eventBus));
-        List<DomainEvent<? extends AggregateRoot>> events = ShowCreatedEventMother.fromCommand(cmd);
+        Flux<DomainEvent> expectedFluxOfEvents = ShowCreatedEventMother.fluxOfSingleEvent();
+        when(this.showRepository.save(any(Show.class))).thenReturn(expectedFluxOfEvents);
+        handler = CreateShowCommandHandlerMother.with(new ShowCreator(this.eventBus, this.showRepository));
 
-        //when
         handler.handle(cmd);
 
-        //then
-        shouldHavePublished(events);
+        shouldHavePublished(expectedFluxOfEvents);
     }
 
     @Test
-    @DisplayName("")
     void it_should_call_ShowCreator_with_ShowId_taken_from_command() {
-        //given
         CreateShowCommand cmd = CreateShowCommandMother.random();
         ShowCreator creator = mock(ShowCreator.class);
         ShowId showId = ShowIdMother.from(cmd);
         ShowTitle showTitle = ShowTitleMother.from(cmd);
         ShowYear showYear = ShowYearMother.from(cmd);
         handler = new CreateShowCommandHandler(creator);
-        //when
+
         handler.handle(cmd);
-        //then
+
         verify(creator, times(1)).create(showId, showTitle, showYear);
     }
 }
